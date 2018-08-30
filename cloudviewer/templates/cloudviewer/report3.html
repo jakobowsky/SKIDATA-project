@@ -1,0 +1,56 @@
+
+{% extends 'cloudviewer/header.html' %}
+{% load static %}
+{% block content %}
+    <section class="jumbotron text-center">
+        <div class="container">
+          <h1 class="jumbotron-heading">{{ cloud }} </h1>
+          <p class="lead text-muted">This report shows: All the active and inactive tenants for each product. (Demo tenants are excluded)</p>
+            <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-outline-dark">UPDATE DATABASE</button>
+            </form>
+            <br>
+
+           <a href="{% url 'exportToExcel' report=report cloud=cloud  %}"><button type="submit" class="btn btn-outline-dark">EXPORT TO EXCEL</button></a>
+
+        </div>
+
+      </section>
+
+
+    {% for product in products %}
+<br>
+<br>
+
+
+<div style="background: #1d2124;color: white;padding: 2%"><H2>{{  product.name }}</H2></div>
+     <table class="table table-hover table-dark">
+
+
+  <thead>
+    <tr>
+      <th scope="col">Product Name</th>
+      <th scope="col">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for tenant in product.active %}
+    <tr>
+      <td>{{ tenant.name }}</td>
+      <td>Active</td>
+    </tr>
+    {% endfor %}
+        {% for tenant in product.inactive %}
+    <tr>
+      <td>{{ tenant.name }}</td>
+      <td>Inactive</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+    </table>
+    {% endfor %}
+    <br>
+    <br>
+
+{% endblock %}

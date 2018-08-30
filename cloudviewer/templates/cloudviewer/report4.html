@@ -1,0 +1,56 @@
+
+{% extends 'cloudviewer/header.html' %}
+{% load static %}
+{% block content %}
+
+
+    <section class="jumbotron text-center">
+        <div class="container">
+          <h1 class="jumbotron-heading">{{ tenants.0.cloud }}</h1>
+          <p class="lead text-muted">This report shows: Tenant names, their parents, demo/live , serviceBoxes info.</p>
+            <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-outline-dark">UPDATE DATABASE</button>
+            </form>
+             <br>
+
+           <a href="{% url 'exportToExcel' report=report cloud=cloud  %}"><button type="submit" class="btn btn-outline-dark">EXPORT TO EXCEL</button></a>
+        </div>
+      </section>
+
+  <table class="table table-hover table-dark">
+  <thead>
+    <tr>
+      <th scope="col">Tenant Name</th>
+      <th scope="col">Parent Name</th>
+      <th scope="col">Demo</th>
+      <th scope="col">Service Box</th>
+      <th scope="col">Installed Version</th>
+       <th scope="col">Last Updated</th>
+       <th scope="col">Products</th>
+
+    </tr>
+  </thead>
+  <tbody>
+
+    {% for tenant in tenants %}
+    <tr>
+        {% if not 'root'|upper in tenant.name|upper and tenant.leaf == True and  "None"|upper != tenant.serviceBox|upper %}
+
+      <td>{{ tenant.name }}</td>
+      <td>{{ tenant.parentName }}</td>
+      <td>{{ tenant.demoTenant }}</td>
+      <td>{{ tenant.serviceBox }}</td>
+      <td>{{ tenant.installedVersion }}</td>
+      <td>{{ tenant.lastUpdate }}</td>
+      <td>|| {% for p in tenant.products %}{{ p }}   {% endfor %}</td>
+
+        {% endif %}
+    </tr>
+    {% endfor %}
+
+  </tbody>
+  </table>
+
+
+{% endblock %}

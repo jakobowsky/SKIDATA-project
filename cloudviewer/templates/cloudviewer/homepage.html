@@ -1,0 +1,24 @@
+{% extends 'cloudviewer/header.html' %}
+
+{% block content %}
+
+    <section class="jumbotron text-center">
+        <div class="container">
+          <h1 class="jumbotron-heading">About service</h1>
+          <p class="lead text-muted">"Sweb service - installed base" provides you different reports of tenants, clouds and products.</p>
+            <p class="lead text-muted">Choose Cloud and type of report and click "SUBMIT" button</p>
+
+        </div>
+      </section>
+
+
+    <div class="container">
+    <form method="post" novalidate>
+    {%  csrf_token %}
+    {{ form }}
+        <br>
+     <button type="submit" class="btn btn-outline-dark">SUBMIT</button>
+    </form>
+    </div>
+
+{% endblock %}
