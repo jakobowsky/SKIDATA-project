@@ -154,7 +154,7 @@ def updateDatabse(cloudName): #function which updates the wholce database, it ta
     cloud = TenantCloud(cloudName=AU_Live[0])
     cloud.save()
 
-    #admin = ('wojb@root', 'skidata123!')
+    #admin = (####)
     #first we have to delete tenants to make sure everything is updated and database contains only current data from servers
     TENANTS_OF_CLOUD = tenants.CreatorofCloudUsers(CLOUD)
     tenantsOBJ = Tenant.objects.all()
